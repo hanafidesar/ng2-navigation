@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "ES5",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "declaration": true,
+        "moduleResolution": "node"
+    },
+    "files": [
+        "typings/main.d.ts",
+        "ng2-navigation.ts",
+        "./src/menu.component.ts",
+        "./src/sidebar.config.ts",
+        "./src/navbar.container.ts",
+        "./src/navigation.service.ts",
+        "./tests/menu.component.spec.ts",
+        "./tests/sidebar.component.spec.ts",
+        "./tests/navbar.component.spec.ts",
+        "./tests/navigation.service.spec.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
