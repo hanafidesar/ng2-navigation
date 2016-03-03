@@ -4,17 +4,17 @@
 
 'use strict';
 
-import {Menu} from './src/menu.container';
+import {Menu, MenuItem} from './src/menu.component';
 import {Navbar} from './src/navbar.component';
-import {Sidebar} from './src/sidebar.config';
+import {Sidebar} from './src/sidebar.component';
 import {NavigationService} from './src/navigation.service';
 
-export * from './src/menu.container';
+export * from './src/menu.component';
 export * from './src/navbar.component';
 export * from './src/sidebar.component';
 export * from './src/navigation.service';
 
 export default {
   providers: [NavigationService],
-  directives: [Menu, Navbar, Sidebar]
+  directives: [Menu, MenuItem, Navbar, Sidebar]
 }

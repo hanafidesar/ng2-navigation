@@ -10,6 +10,7 @@ import {CORE_DIRECTIVES} from 'angular2/common';
  */
 @Component({
     selector: 'ng2-sidebar',
-    directives: [CORE_DIRECTIVES]
+    directives: [CORE_DIRECTIVES],
+    template: ``
 })
 export class Sidebar { }

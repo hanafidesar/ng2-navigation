@@ -23,7 +23,7 @@ export function main() {
 
         it('is defined',
             inject([NavigationService], (service:NavigationService) => {
-                expect(NAvigationService).toBeDefined();
+                expect(NavigationService).toBeDefined();
                 expect(service instanceof NavigationService).toBeTruthy();
             })
         );
