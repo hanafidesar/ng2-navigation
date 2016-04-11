@@ -1,0 +1,147 @@
+import {
+  describe,
+  expect,
+  beforeEach,
+  it,
+  inject,
+  injectAsync,
+  beforeEachProviders,
+  TestComponentBuilder,
+  ComponentFixture,
+  fakeAsync,
+  tick,
+  MockApplicationRef,
+} from 'angular2/testing';
+
+import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS}
+from 'angular2/platform/testing/browser';
+
+import {Component} from 'angular2/core';
+import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF, RouteConfig, RouteRegistry, } from 'angular2/router';
+import {provide, ApplicationRef} from 'angular2/core';
+
+import {Observable} from 'rxjs/Observable';
+
+import {Item} from '../src/nav.service';
+import {Menu, MenuItem} from '../src/menu';
+
+@Component({selector: 'mock-cmp'})
+class MockComponent {
+}
+
+@Component({
+    selector: 'mock-app',
+    directives: [ROUTER_DIRECTIVES, MockComponent],
+    template: '<router-outlet></router-outlet>'})
+@RouteConfig([
+    {path: '/Test', component: MockComponent, name: 'Test'}
+])
+class MockPrimaryComponent {
+}
+
+export function main() {
+    // describe('Menu', () => {
+
+    //     let componentFixture: ComponentFixture;
+    //     let el: HTMLElement;
+    //     let menu: Menu;
+
+    //     let items: Item[] = [<Item>{
+    //         name: "Item 1",
+    //         link: "#",
+    //         isDivider: false,
+    //         items: [{
+    //             name: "Item 2",
+    //             link: "state1",
+    //             isDivider: false
+    //         },{
+    //             name: "Item 3",
+    //             link: "state2",
+    //             isDivider: false
+    //         }]
+    //     }];
+
+    //     beforeEachProviders(() => {
+    //         return [TEST_BROWSER_PLATFORM_PROVIDERS,
+    //             TEST_BROWSER_APPLICATION_PROVIDERS,
+    //             provide(APP_BASE_HREF, {useValue: "/"}),
+    //             provide(ROUTER_PRIMARY_COMPONENT, {useClass: MockPrimaryComponent}),
+    //             ROUTER_PROVIDERS,
+    //             provide(ApplicationRef, { useClass: MockApplicationRef })
+    //         ];
+    //     });
+
+
+    //      beforeEach(injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+    //         return tcb.createAsync(Menu).then((cf:ComponentFixture) => {
+    //             componentFixture = cf;
+    //             el = cf.nativeElement;
+    //             menu = cf.componentInstance;
+    //             //
+    //             menu.items = items;
+    //             componentFixture.detectChanges();
+    //         });
+    //     }));
+
+    //     it('should be defined', () => {
+    //         expect(el).toBeDefined();
+    //         console.log(el);
+    //         expect(el.querySelector('.dropdown-menu')).toBeDefined();
+    //     });
+
+
+    // });
+
+    describe('Menu Item', () => {
+
+
+        let componentFixture: ComponentFixture;
+        let el: HTMLElement;
+        let menuItem: MenuItem;
+
+        let item: Item = <Item>{
+            name: "Item 1",
+            link: ['Test'],
+            isDivider: false/*,
+            items: [{
+                name: "Item 2",
+                link: "state1"
+            },{
+                name: "Item 3",
+                link: "state2"
+            }]*/
+        };
+
+        beforeEachProviders(() => {
+            return [TEST_BROWSER_PLATFORM_PROVIDERS,
+                TEST_BROWSER_APPLICATION_PROVIDERS,
+                RouteRegistry,
+                provide(Location, {useClass: SpyLocation}),
+                provide(ROUTER_PRIMARY_COMPONENT, {useValue: App}),
+                provide(Router, {useClass: RootRouter})
+                // provide(APP_BASE_HREF, {useValue: "/"}),
+                // RouteRegistry,
+                // ROUTER_PROVIDERS,
+                // provide(ROUTER_PRIMARY_COMPONENT, {useClass: MockPrimaryComponent}),
+                // provide(ApplicationRef, { useClass: MockApplicationRef })
+            ];
+        });
+
+
+         beforeEach(injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+            return tcb.createAsync(MenuItem).then((cf:ComponentFixture) => {
+                componentFixture = cf;
+                el = cf.nativeElement;
+                menuItem = cf.componentInstance;
+                //
+                menuItem.item = item;
+                componentFixture.detectChanges();
+            });
+        }));
+
+        it('should be defined', () => {
+            expect(el).toBeDefined();
+            console.log(el);
+        });
+    });
+}

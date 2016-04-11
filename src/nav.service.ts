@@ -3,19 +3,12 @@
 // https://github.com/akserg/ng2-navigation
 
 import {Injectable} from 'angular2/core';
-import {isPresent} from 'angular2/src/facade/lang';
 
-/**
- * Navigation Item
-  */
 export interface NavItem {
-    name: string;
-
-    iconClass?:string;
-    text?:string;
-    isDivider?:boolean;
-
-    children?:Array<NavItem>;
+    name?: string;
+    link?: Array<any>;
+    isDivider?: boolean;
+    items?: Array<NavItem>
 }
 
 /**
@@ -23,8 +16,4 @@ export interface NavItem {
  */
 @Injectable()
 export class NavigationService {
-    iconBaseClass:string = 'glyphicon';
-    defaultIconClassPrefix:string = 'glyphicon';
-    menuItems:Array<NavItem> = [];
 }
-

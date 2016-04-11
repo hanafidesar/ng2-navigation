@@ -1,8 +1,8 @@
-System.registerDynamic("src/menu.component", ["angular2/core", "angular2/router", "angular2/common", "angular2/src/facade/lang", "./navigation.service"], true, function($__require, exports, module) {
+System.registerDynamic("src/menu", ["angular2/core", "angular2/common", "angular2/router", "angular2/src/facade/lang"], true, function($__require, exports, module) {
   ;
-  var define;
-  var global = this;
-  var GLOBAL = this;
+  var define,
+      global = this,
+      GLOBAL = this;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -20,176 +20,88 @@ System.registerDynamic("src/menu.component", ["angular2/core", "angular2/router"
       return Reflect.metadata(k, v);
   };
   var core_1 = $__require('angular2/core');
-  var router_1 = $__require('angular2/router');
   var common_1 = $__require('angular2/common');
+  var router_1 = $__require('angular2/router');
   var lang_1 = $__require('angular2/src/facade/lang');
-  var navigation_service_1 = $__require('./navigation.service');
-  var MenuItem = (function() {
-    function MenuItem(elementRef, router, navigationService) {
-      var _this = this;
-      this.elementRef = elementRef;
-      this.router = router;
-      this.navigationService = navigationService;
-      this.isActive = false;
-      router.subscribe(function(value) {
-        _this.isActive = _this.isMenuItemActive(_this.menuItem, value);
-      });
-    }
-    MenuItem.prototype.iconBaseClass = function() {
-      return this.navigationService.iconBaseClass;
-    };
-    MenuItem.prototype.isMenuItemActive = function(item, value) {
-      if (!lang_1.isPresent(item.children)) {
-        return lang_1.isPresent(item.name) && value.name === item.name;
-      }
-      for (var i = 0; i < item.children.length; i++) {
-        if (lang_1.isPresent(item.children[i].name) && value.name === item.children[i].name) {
-          return true;
-        }
-        if (this.isMenuItemActive(item.children[i], value)) {
-          return true;
-        }
-      }
-      return false;
-    };
-    __decorate([core_1.Input('menu-item'), __metadata('design:type', Object)], MenuItem.prototype, "menuItem", void 0);
-    __decorate([core_1.Input('menu-item-collapsed-icon-class'), __metadata('design:type', String)], MenuItem.prototype, "menuItemCollapsedIconClass", void 0);
-    __decorate([core_1.Input('menu-item-expanded-icon-class'), __metadata('design:type', String)], MenuItem.prototype, "menuItemExpandedIconClass", void 0);
-    MenuItem = __decorate([core_1.Component({
-      selector: 'ng2-menu-item',
-      directives: [common_1.CORE_DIRECTIVES],
-      template: "\n<li ngClass=\"{ 'leaf': !menuItem.children }\" ngIf=\"isVisible(menuItem)\">\n  <span ngIf=\"menuItem.children\" class=\"float-right icon-fw {{ iconBaseClass() }}\" ngClass=\"menuItem.isCollapsed ? menuItemCollapsedIconClass : menuItemExpandedIconClass\"></span>\n  <a ngIf=\"item.name\" ngLink=\"{{item.name}}\">\n    <span class=\"menu-item-icon icon-fw {{ iconBaseClass() }} {{ menuItem.iconClass}}\"></span>\n    <span class=\"menu-item-text\"> {{ menuItem.text }}</span>\n    <!-- Menu with children here -->\n  </a>\n</li>\n"
-    }), __metadata('design:paramtypes', [core_1.ElementRef, router_1.Router, navigation_service_1.NavigationService])], MenuItem);
-    return MenuItem;
-  })();
-  exports.MenuItem = MenuItem;
   var Menu = (function() {
-    function Menu(navigationService) {
-      this.navigationService = navigationService;
-      this._navClass = 'navigation-menu';
-      this.menuItems = [];
+    function Menu() {
+      this.items = [];
     }
-    Object.defineProperty(Menu.prototype, "navClass", {
-      get: function() {
-        return this._navClass;
-      },
-      set: function(value) {
-        this._navClass = value || 'navigation-menu';
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(Menu.prototype, "menuItemCollapsedIconClass", {
-      get: function() {
-        return this.menuItemCollapsedIconClass;
-      },
-      set: function(value) {
-        this._menuItemCollapsedIconClass = value || this.navigationService.defaultIconClassPrefix + '-chevron-left';
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(Menu.prototype, "menuItemExpandedIconClass", {
-      get: function() {
-        return this._menuItemCollapsedIconClass;
-      },
-      set: function(value) {
-        this._menuItemExpandedIconClass = value || this.navigationService.defaultIconClassPrefix + '-chevron-down';
-      },
-      enumerable: true,
-      configurable: true
-    });
-    __decorate([core_1.Input('nav-class'), __metadata('design:type', String), __metadata('design:paramtypes', [String])], Menu.prototype, "navClass", null);
-    __decorate([core_1.Input('menu-item-collapsed-icon-class'), __metadata('design:type', String), __metadata('design:paramtypes', [String])], Menu.prototype, "menuItemCollapsedIconClass", null);
-    __decorate([core_1.Input('menu-item-expanded-icon-class'), __metadata('design:type', String), __metadata('design:paramtypes', [String])], Menu.prototype, "menuItemExpandedIconClass", null);
+    __decorate([core_1.Input(), __metadata('design:type', Array)], Menu.prototype, "items", void 0);
     Menu = __decorate([core_1.Component({
-      selector: 'ng2-nav-menu',
-      directives: [common_1.CORE_DIRECTIVES],
-      template: "\n<ul ngClass=\"navClass\">\n    <ng2-nav-menu-item *ngFor=\"item of menuItems\" menuItem=\"item\"\n        menu-item-collapsed-icon-class=\"menuItemCollapsedIconClass\"\n        menu-item-expanded-icon-class=\"menuItemExpandedIconClass\"></ng2-menu-item>\n</ul>"
-    }), __metadata('design:paramtypes', [navigation_service_1.NavigationService])], Menu);
+      selector: 'ng2-menu',
+      directives: [common_1.CORE_DIRECTIVES, router_1.ROUTER_DIRECTIVES],
+      template: "\n<ul class='dropdown-menu'>\n    <ng2-menu-item *ngFor='#item of items' item='item'></ng2-menu-item>\n</ul>"
+    }), __metadata('design:paramtypes', [])], Menu);
     return Menu;
   })();
   exports.Menu = Menu;
-  return module.exports;
-});
-
-System.registerDynamic("src/navbar.component", ["angular2/core", "angular2/common"], true, function($__require, exports, module) {
-  ;
-  var define;
-  var global = this;
-  var GLOBAL = this;
-  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(decorators, target, key, desc);
-    else
-      for (var i = decorators.length - 1; i >= 0; i--)
-        if (d = decorators[i])
-          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-  };
-  var __metadata = (this && this.__metadata) || function(k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-      return Reflect.metadata(k, v);
-  };
-  var core_1 = $__require('angular2/core');
-  var common_1 = $__require('angular2/common');
-  var Navbar = (function() {
-    function Navbar() {}
-    Navbar = __decorate([core_1.Component({
-      selector: 'ng2-navbar',
-      directives: [common_1.CORE_DIRECTIVES],
-      template: ""
-    }), __metadata('design:paramtypes', [])], Navbar);
-    return Navbar;
+  var MenuItem = (function() {
+    function MenuItem(elRef) {
+      this.elRef = elRef;
+      this.el = elRef.nativeElement;
+      var clazz = this.getClassByParent();
+      this.el.classList.add(clazz);
+    }
+    Object.defineProperty(MenuItem.prototype, "item", {
+      get: function() {
+        return this._item;
+      },
+      set: function(value) {
+        this._item = this.checkAndFixItem(value);
+      },
+      enumerable: true,
+      configurable: true
+    });
+    MenuItem.prototype.checkAndFixItem = function(value) {
+      if (lang_1.isPresent(value)) {
+        if (!lang_1.isPresent(value.name)) {
+          value.name = '';
+        }
+        if (!lang_1.isPresent(value.link)) {
+          value.link = [];
+        }
+        if (!lang_1.isPresent(value.isDivider)) {
+          value.isDivider = false;
+        }
+        return value;
+      } else {
+        return {
+          name: '',
+          link: [],
+          isDivider: false
+        };
+      }
+    };
+    MenuItem.prototype.getClassByParent = function() {
+      var clazz = 'dropdown-submenu';
+      var parent = this.el.parentElement;
+      while (parent) {
+        if (parent.className.indexOf('navbar-right') !== -1) {
+          clazz = 'dropdown-submenu-right';
+          break;
+        }
+        parent = parent.parentElement;
+      }
+      return clazz;
+    };
+    __decorate([core_1.Input(), __metadata('design:type', Object), __metadata('design:paramtypes', [Object])], MenuItem.prototype, "item", null);
+    MenuItem = __decorate([core_1.Component({
+      selector: 'ng2-menu-item',
+      directives: [common_1.CORE_DIRECTIVES, router_1.ROUTER_DIRECTIVES],
+      template: "\n<li [ngClass]=\"{divider: item.isDivider}\">\n    <a [routerLink]=\"item.link\" *ngIf=\"!item.isDivider\">{{item.name}}</a>\n    <ng2-menu *ngIf=\"item.items\" items=\"item.items\"></ng2-menu>\n</li>"
+    }), __metadata('design:paramtypes', [core_1.ElementRef])], MenuItem);
+    return MenuItem;
   })();
-  exports.Navbar = Navbar;
+  exports.MenuItem = MenuItem;
   return module.exports;
 });
 
-System.registerDynamic("src/sidebar.component", ["angular2/core", "angular2/common"], true, function($__require, exports, module) {
+System.registerDynamic("src/nav.service", ["angular2/core"], true, function($__require, exports, module) {
   ;
-  var define;
-  var global = this;
-  var GLOBAL = this;
-  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(decorators, target, key, desc);
-    else
-      for (var i = decorators.length - 1; i >= 0; i--)
-        if (d = decorators[i])
-          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-  };
-  var __metadata = (this && this.__metadata) || function(k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-      return Reflect.metadata(k, v);
-  };
-  var core_1 = $__require('angular2/core');
-  var common_1 = $__require('angular2/common');
-  var Sidebar = (function() {
-    function Sidebar() {}
-    Sidebar = __decorate([core_1.Component({
-      selector: 'ng2-sidebar',
-      directives: [common_1.CORE_DIRECTIVES],
-      template: ""
-    }), __metadata('design:paramtypes', [])], Sidebar);
-    return Sidebar;
-  })();
-  exports.Sidebar = Sidebar;
-  return module.exports;
-});
-
-System.registerDynamic("src/navigation.service", ["angular2/core"], true, function($__require, exports, module) {
-  ;
-  var define;
-  var global = this;
-  var GLOBAL = this;
+  var define,
+      global = this,
+      GLOBAL = this;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -208,11 +120,7 @@ System.registerDynamic("src/navigation.service", ["angular2/core"], true, functi
   };
   var core_1 = $__require('angular2/core');
   var NavigationService = (function() {
-    function NavigationService() {
-      this.iconBaseClass = 'glyphicon';
-      this.defaultIconClassPrefix = 'glyphicon';
-      this.menuItems = [];
-    }
+    function NavigationService() {}
     NavigationService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], NavigationService);
     return NavigationService;
   })();
@@ -220,29 +128,20 @@ System.registerDynamic("src/navigation.service", ["angular2/core"], true, functi
   return module.exports;
 });
 
-System.registerDynamic("ng2-navigation", ["./src/menu.component", "./src/navbar.component", "./src/sidebar.component", "./src/navigation.service"], true, function($__require, exports, module) {
+System.registerDynamic("ng2-navigation", ["./src/menu", "./src/nav.service"], true, function($__require, exports, module) {
   "use strict";
   ;
-  var define;
-  var global = this;
-  var GLOBAL = this;
+  var define,
+      global = this,
+      GLOBAL = this;
   function __export(m) {
     for (var p in m)
       if (!exports.hasOwnProperty(p))
         exports[p] = m[p];
   }
-  var menu_component_1 = $__require('./src/menu.component');
-  var navbar_component_1 = $__require('./src/navbar.component');
-  var sidebar_component_1 = $__require('./src/sidebar.component');
-  var navigation_service_1 = $__require('./src/navigation.service');
-  __export($__require('./src/menu.component'));
-  __export($__require('./src/navbar.component'));
-  __export($__require('./src/sidebar.component'));
-  __export($__require('./src/navigation.service'));
-  Object.defineProperty(exports, "__esModule", {value: true});
-  exports.default = {
-    providers: [navigation_service_1.NavigationService],
-    directives: [menu_component_1.Menu, menu_component_1.MenuItem, navbar_component_1.Navbar, sidebar_component_1.Sidebar]
-  };
+  var menu_1 = $__require('./src/menu');
+  __export($__require('./src/menu'));
+  __export($__require('./src/nav.service'));
+  exports.NAV_DIRECTIVES = [menu_1.MenuItem, menu_1.Menu];
   return module.exports;
 });
